@@ -22,11 +22,9 @@
 
 
 
-
-
 ### 项目结构
 
-├─.idea
+<details><summary>展开查看</summary><pre><code>├─.idea
 ├─client	`客户端`
 │  ├─chess	`这是象棋主文件包`
 │  ├─file2bytes		`这是一个把图片转换成二进制的包`
@@ -44,3 +42,5 @@
     ├─model
     ├─service
     └─tool
+    </pre></code>
+</details>
