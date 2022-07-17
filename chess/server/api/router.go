@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func InitRouter() {
+func InitRouter() *gin.Engine {
 	r := gin.Default()
 
 	u := r.Group("/user")
@@ -14,5 +14,5 @@ func InitRouter() {
 	}
 	r.GET("/ws", WS)
 
-	r.Run(":8080")
+	return r
 }

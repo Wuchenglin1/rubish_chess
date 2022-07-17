@@ -1,3 +1,9 @@
+/*
+ * @Author: wcl
+ * @Data: 2022/7/16 19:25
+ * @Desc: 定义各种消息的类型
+ */
+
 package chess
 
 type ResponseLoginMessage struct {
@@ -15,17 +21,16 @@ type ResponseRegisterMessage struct {
 	Status int    `json:"status"`
 }
 type Msg struct {
-	Uid        uint     `json:"uid"`
-	Cmd        int64    `json:"cmd"`
-	RoomNum    int      `json:"roomNum"` //房间号
-	Info       string   `json:"info"`
-	IsGameOver bool     `json:"isGameOver"`
-	LastStep   []int    `json:"step"`
-	NextStep   []int    `json:"step2"`
-	BoardInfo  [132]int `json:"boardInfo"`
+	Uid        uint     `json:"uid"`        //用户id
+	Cmd        int64    `json:"cmd"`        //指令id
+	RoomNum    int      `json:"roomNum"`    //房间号
+	Info       string   `json:"info"`       //发送的信息
+	IsGameOver bool     `json:"isGameOver"` //是否游戏结束
+	LastStep   []int    `json:"step"`       //上一步的位置
+	NextStep   []int    `json:"step2"`      //下一步的位置
+	BoardInfo  [132]int `json:"boardInfo"`  //棋盘信息
 }
 
-//var ReadMsgChan = make(chan Msg, 100)
 var SendMsgChan = make(chan Msg, 100)
 
 const (
@@ -59,6 +64,9 @@ const (
 	heipao = -13
 	//黑卒
 	heizu = -14
+
+	REGISTER = 2
+	LOGIN    = 3
 )
 
 //棋子位置

@@ -48,7 +48,7 @@ func NewGame() bool {
 	fmt.Println("请输入账号密码")
 
 	switch choice {
-	case 1:
+	case REGISTER:
 		for _, err1 := fmt.Scan(&userName, &password); err1 != nil || userName == "" || password == ""; {
 			fmt.Println("您的输入有误，请重新输入")
 		}
@@ -71,7 +71,7 @@ func NewGame() bool {
 				break
 			}
 		}
-	case 2:
+	case LOGIN:
 		for _, err1 := fmt.Scan(&userName, &password); err1 != nil; {
 			fmt.Println("您的输入有误，请重新输入")
 		}

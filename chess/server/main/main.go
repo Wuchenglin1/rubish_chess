@@ -10,5 +10,6 @@ func main() {
 	tool.InitConfig()
 	dao.InitMysql()
 	dao.InitRedis()
-	api.InitRouter()
+	r := api.InitRouter()
+	r.Run(":8080")
 }

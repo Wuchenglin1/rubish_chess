@@ -3,8 +3,8 @@ package chess
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -13,7 +13,7 @@ import (
 var Uid uint
 
 func Login(userName, password string) error {
-	_url := "http://110.42.184.72:8080/user/login"
+	_url := "http://110.42.184.72:8084/user/login"
 	client := &http.Client{}
 	values := url.Values{}
 	values.Set("userName", userName)
@@ -21,27 +21,27 @@ func Login(userName, password string) error {
 
 	req, err := http.NewRequest("POST", _url, strings.NewReader(values.Encode()))
 	if err != nil {
-		log.Fatalf("create request error : %v", err)
+		fmt.Printf("create request error : %v", err)
 		return err
 	}
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Fatalf("do request error %v", err)
+		fmt.Printf("do request error %v", err)
 		return err
 	}
 	defer resp.Body.Close()
 
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalf("read error : %v", err)
+		fmt.Printf("read error : %v", err)
 		return err
 	}
 
 	var info ResponseLoginMessage
 	err = json.Unmarshal(data, &info)
 	if err != nil {
-		log.Fatalf("unmarshal resp data error : %v", err)
+		fmt.Printf("unmarshal resp data error : %v", err)
 		return err
 	}
 	token = info.Data.AccessToken
@@ -50,33 +50,33 @@ func Login(userName, password string) error {
 }
 
 func Register(userName, password string) error {
-	_url := "http://110.42.184.72:8080/user/register"
+	_url := "http://110.42.184.72:8084/user/register"
 	client := &http.Client{}
 	values := url.Values{}
 	values.Set("userName", userName)
 	values.Add("password", password)
 	req, err := http.NewRequest("POST", _url, strings.NewReader(values.Encode()))
 	if err != nil {
-		log.Fatalf("create request error : %v", err)
+		fmt.Printf("create request error : %v", err)
 		return err
 	}
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Fatalf("do request error %v", err)
+		fmt.Printf("do request error %v", err)
 		return err
 	}
 	defer resp.Body.Close()
 
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalf("read error : %v", err)
+		fmt.Printf("read error : %v", err)
 		return err
 	}
 	var respMsg ResponseRegisterMessage
 	err = json.Unmarshal(data, &respMsg)
 	if err != nil {
-		log.Fatalf("unmarshal error : %v", err)
+		fmt.Printf("unmarshal error : %v", err)
 	}
 	if respMsg.Status == 400 {
 		nErr := errors.New("account wrong")

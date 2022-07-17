@@ -210,6 +210,7 @@ func ParseData(data []byte) {
 	}
 }
 
+//Move 各种象棋移动的逻辑处理
 func Move(node *model.Node, rmi *model.RoomInfo, lastStep, nextStep []int) {
 
 	startType := CheckPosition(rmi, lastStep[0], lastStep[1])

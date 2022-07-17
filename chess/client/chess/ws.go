@@ -11,11 +11,13 @@ import (
 	"strconv"
 )
 
-var addr = flag.String("addr", "110.42.184.72:8080", "http service address")
-var token string
-var roomNum int
-var Message Msg
-var UpdateBoard [132]int
+var (
+	addr        = flag.String("addr", "110.42.184.72:8080", "http service address")
+	token       string
+	roomNum     int
+	Message     Msg
+	UpdateBoard [132]int
+)
 
 func Connect() {
 	flag.Parse()

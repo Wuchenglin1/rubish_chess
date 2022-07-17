@@ -13,21 +13,23 @@ import (
 func SearchUserByName(u *model.User) (bool, error) {
 	//先查redis中是否存在user
 	val, err := Rdb.Get(context.Background(), u.UserName).Result()
-	if err != nil {
-		if err.Error() == "redis: nil" {
-			return false, nil
-		}
-		return false, err
+	if err == nil {
+		//redis中存在user，返回true,nil
+		data := strings.Split(val, ";")
+		fmt.Println(data)
+		_int, _ := strconv.Atoi(data[0])
+		u.ID = uint(_int)
+		u.Password = data[1]
+		return true, nil
 	}
-	data := strings.Split(val, ";")
-	fmt.Println(data)
-	_int, err := strconv.Atoi(data[0])
-	u.ID = uint(_int)
-	u.Password = data[1]
-	//redis中存在user，返回true,nil
+	//查询出错
+	if err.Error() != "redis: nil" {
+		fmt.Println(err.Error())
+		return false, nil
+	}
 	//redis中不存在user
 	//再查mysql
-	db := Db.Where("user_name = ?", u.UserName).First(&u)
+	db := Db.Where("user_name = ?", u.UserName).Find(&u)
 	if db.Error != nil {
 		if db.Error == gorm.ErrRecordNotFound {
 			//mysql中不存在user返回false,nil
